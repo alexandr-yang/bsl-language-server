@@ -32,6 +32,7 @@ import com.github._1c_syntax.bsl.languageserver.context.computer.QueryComputer;
 import com.github._1c_syntax.bsl.languageserver.context.computer.SymbolTreeComputer;
 import com.github._1c_syntax.bsl.languageserver.context.symbol.MethodSymbol;
 import com.github._1c_syntax.bsl.languageserver.context.symbol.SymbolTree;
+import com.github._1c_syntax.bsl.languageserver.utils.MdoRefBuilder;
 import com.github._1c_syntax.bsl.languageserver.utils.Trees;
 import com.github._1c_syntax.bsl.mdo.MD;
 import com.github._1c_syntax.bsl.mdo.support.ScriptVariant;
@@ -254,6 +255,16 @@ public class DocumentContext implements Comparable<DocumentContext> {
 
   public Optional<MD> getMdObject() {
     return getServerContext().getConfiguration().findChild(getUri());
+  }
+
+  /**
+   * Возвращает строковое представление ссылки связанного с объектом объекта метаданных 1С либо строку URI для
+   * остальных случаев
+   *
+   * @return Строковое представление ссылки
+   */
+  public String getMdoRef() {
+    return MdoRefBuilder.getMdoRef(this);
   }
 
   public List<SDBLTokenizer> getQueries() {

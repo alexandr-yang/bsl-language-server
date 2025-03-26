@@ -29,7 +29,6 @@ import com.github._1c_syntax.bsl.languageserver.context.symbol.annotations.Annot
 import com.github._1c_syntax.bsl.languageserver.context.symbol.description.MethodDescription;
 import com.github._1c_syntax.bsl.languageserver.context.symbol.description.ParameterDescription;
 import com.github._1c_syntax.bsl.languageserver.context.symbol.description.TypeDescription;
-import com.github._1c_syntax.bsl.languageserver.utils.MdoRefBuilder;
 import com.github._1c_syntax.bsl.languageserver.utils.Resources;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.lsp4j.SymbolKind;
@@ -142,7 +141,7 @@ public class DescriptionFormatter {
   public String getLocation(MethodSymbol symbol) {
     var documentContext = symbol.getOwner();
     var startPosition = symbol.getSelectionRange().getStart();
-    String mdoRef = MdoRefBuilder.getMdoRef(documentContext);
+    var mdoRef = documentContext.getMdoRef();
 
     return String.format(
       "[%s](%s#%d)",
@@ -155,7 +154,7 @@ public class DescriptionFormatter {
   public String getLocation(VariableSymbol symbol) {
     var documentContext = symbol.getOwner();
     var startPosition = symbol.getSelectionRange().getStart();
-    String mdoRef = MdoRefBuilder.getMdoRef(documentContext);
+    var mdoRef = documentContext.getMdoRef();
 
     String parentPostfix = symbol.getRootParent(SymbolKind.Method)
       .map(sourceDefinedSymbol -> "." + sourceDefinedSymbol.getName())

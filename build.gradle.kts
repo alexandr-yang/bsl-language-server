@@ -86,7 +86,7 @@ dependencies {
         exclude("org.antlr", "antlr-runtime")
     }
     api("io.github.1c-syntax", "utils", "0.6.2")
-    api("io.github.1c-syntax", "mdclasses", "0.15.0")
+    api("io.github.1c-syntax", "mdclasses", "develop-SNAPSHOT")
     api("io.github.1c-syntax", "bsl-common-library", "0.8.0")
     api("io.github.1c-syntax", "supportconf", "0.14.2")
     api("io.github.1c-syntax", "bsl-parser-core", "0.3.0")

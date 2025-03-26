@@ -27,7 +27,6 @@ import com.github._1c_syntax.bsl.languageserver.context.symbol.Symbol;
 import com.github._1c_syntax.bsl.languageserver.references.ReferenceIndex;
 import com.github._1c_syntax.bsl.languageserver.references.ReferenceResolver;
 import com.github._1c_syntax.bsl.languageserver.references.model.Reference;
-import com.github._1c_syntax.bsl.languageserver.utils.MdoRefBuilder;
 import com.github._1c_syntax.bsl.languageserver.utils.Ranges;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.lsp4j.CallHierarchyIncomingCall;
@@ -126,7 +125,7 @@ public class CallHierarchyProvider {
   }
 
   private static CallHierarchyItem getCallHierarchyItem(SourceDefinedSymbol sourceDefinedSymbol) {
-    String detail = MdoRefBuilder.getMdoRef(sourceDefinedSymbol.getOwner());
+    String detail = sourceDefinedSymbol.getOwner().getMdoRef();
 
     CallHierarchyItem item = new CallHierarchyItem();
     item.setName(sourceDefinedSymbol.getName());

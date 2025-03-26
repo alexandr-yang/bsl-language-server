@@ -33,7 +33,6 @@ import com.github._1c_syntax.bsl.languageserver.references.model.Reference;
 import com.github._1c_syntax.bsl.languageserver.references.model.Symbol;
 import com.github._1c_syntax.bsl.languageserver.references.model.SymbolOccurrence;
 import com.github._1c_syntax.bsl.languageserver.references.model.SymbolOccurrenceRepository;
-import com.github._1c_syntax.bsl.languageserver.utils.MdoRefBuilder;
 import com.github._1c_syntax.bsl.languageserver.utils.Ranges;
 import com.github._1c_syntax.bsl.types.ModuleType;
 import com.github._1c_syntax.utils.StringInterner;
@@ -67,7 +66,7 @@ public class ReferenceIndex {
    * @return Список ссылок на символ.
    */
   public List<Reference> getReferencesTo(SourceDefinedSymbol symbol) {
-    var mdoRef = MdoRefBuilder.getMdoRef(symbol.getOwner());
+    var mdoRef = symbol.getOwner().getMdoRef();
     var moduleType = symbol.getOwner().getModuleType();
     var symbolName = symbol.getName().toLowerCase(Locale.ENGLISH);
     String scopeName = "";
@@ -201,7 +200,7 @@ public class ReferenceIndex {
    * @param methodName   Имя метода, к которому относиться перменная. Пустой если переменная относиться к модулю.
    * @param variableName Имя переменной, к которой происходит обращение.
    * @param range        Диапазон, в котором происходит обращение к символу.
-   * @param definition     Признак обновления значения переменной.
+   * @param definition   Признак обновления значения переменной.
    */
   public void addVariableUsage(URI uri,
                                String mdoRef,
@@ -259,8 +258,8 @@ public class ReferenceIndex {
       return serverContext.getDocument(mdoRef, moduleType)
         .map(DocumentContext::getSymbolTree)
         .flatMap(symbolTree -> symbolTree.getMethodSymbol(symbolEntity.getScopeName())
-        .flatMap(method -> symbolTree.getVariableSymbol(symbolName, method))
-        .or(() -> symbolTree.getVariableSymbol(symbolName, symbolTree.getModule())));
+          .flatMap(method -> symbolTree.getVariableSymbol(symbolName, method))
+          .or(() -> symbolTree.getVariableSymbol(symbolName, symbolTree.getModule())));
     }
 
     return serverContext.getDocument(mdoRef, moduleType)

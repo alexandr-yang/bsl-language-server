@@ -21,7 +21,6 @@
  */
 package com.github._1c_syntax.bsl.languageserver.diagnostics;
 
-import com.github._1c_syntax.bsl.languageserver.configuration.Language;
 import com.github._1c_syntax.bsl.languageserver.configuration.LanguageServerConfiguration;
 import com.github._1c_syntax.bsl.languageserver.diagnostics.metadata.DiagnosticMetadata;
 import com.github._1c_syntax.bsl.languageserver.diagnostics.metadata.DiagnosticParameter;
@@ -65,7 +64,7 @@ public class MetadataObjectNameLengthDiagnostic extends AbstractMetadataDiagnost
   @Override
   protected void checkMetadata(MD mdo) {
     if (mdo.getName().length() > maxMetadataObjectNameLength) {
-      addAttributeDiagnostic(mdo);
+      addDiagnostic(info.getMessage(getMdoRefLocal(mdo), maxMetadataObjectNameLength));
     }
   }
 
@@ -80,15 +79,5 @@ public class MetadataObjectNameLengthDiagnostic extends AbstractMetadataDiagnost
     } else {
       super.check();
     }
-  }
-
-  private void addAttributeDiagnostic(MD attribute) {
-    String mdoRef;
-    if (serverConfiguration.getLanguage() == Language.RU) {
-      mdoRef = attribute.getMdoReference().getMdoRefRu();
-    } else {
-      mdoRef = attribute.getMdoReference().getMdoRef();
-    }
-    addDiagnostic(info.getMessage(mdoRef, maxMetadataObjectNameLength));
   }
 }
